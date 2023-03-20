@@ -90,7 +90,7 @@ Hard links are like pointers to the inode of the file. \\ \\
 
 \subsection{Symbolic/Soft Links}
 Symbolic links are a special file that contains the file path (\textbf{relative to the directory it is in}) of the file it wants to point to. Because the contents of symbolic links are strings, they can be altered. \\ \\
-\textbf{Example:} Let \texttt{foo} be a file. Using the link command (See \textbf{Shell Commands}) \texttt{ln -s foo bar}, \texttt{bar} is a symbolic link to \texttt{foo}, meaning it is a special file that contains the file path of \texttt{foo}, and not the actual file \texttt{foo} points to. \\ \\
+\textbf{Example:} Let \texttt{foo} be a file. Using the link command (see \textbf{Shell Commands}) \texttt{ln -s foo bar}, \texttt{bar} is a symbolic link to \texttt{foo}, meaning it is a special file that contains the file path of \texttt{foo}, and not the actual file \texttt{foo} points to. \\ \\
 \textbf{Note:} Symbolic links \textbf{can} point to directories. \\ \\
 \textbf{Note:} While regular symbolic links are relative to their path, absolute symbolic links (ones who's contents start with \texttt{/}) are \textbf{not} relative to their path, but are absolute file paths starting at the root directory. \\ \\
 \textbf{Note:} There can be dangling symbolic links that contain a path to a file that does not exist. 
@@ -624,7 +624,7 @@ is equivalent to \texttt{a + b} in \texttt{C++}
       "if \texttt{E1} then \texttt{E2}, else if \texttt{E3} then \texttt{E4}, else if $\ldots$ else if \texttt{E(n-1)} then \texttt{En}
       
       \subsubsection{Defining Functions and misc.}
-      \textbf{See Lisp Reference}
+      \textbf{see Lisp Reference}
 
       % =================================== PYTHON =================================== %
       \subsection{Python}
@@ -1234,10 +1234,10 @@ This set of commands gives information of the state of the repository.
 \texttt{git blame}: Returns a line-by-line history of a specified file in a specified commit (\texttt{HEAD} if not specified) with the author and timestamp of each line.
 
 \subsubsection*{\texttt{git diff}}
-\texttt{git diff COMMIT\_A..COMMIT\_B}: Takes a \texttt{diff} of two commits and prints to \texttt{stdout} \textbf{(See \texttt{git log} for navigating the Terminal output)}.
+\texttt{git diff COMMIT\_A..COMMIT\_B}: Takes a \texttt{diff} of two commits and prints to \texttt{stdout} \textbf{(see \texttt{git log} for navigating the Terminal output)}.
 
 \subsubsection*{\texttt{git grep PATTERN}}
-\texttt{git grep PATTERN}: Same as doing \texttt{grep PATTERN \$(git ls-files)} \textbf{(See \texttt{grep})}
+\texttt{git grep PATTERN}: Same as doing \texttt{grep PATTERN \$(git ls-files)} \textbf{(see \texttt{grep})}
 
 \subsubsection*{\texttt{git log}}
 \texttt{git log [OPTIONS] (start-point..end-point]}: Prints the commit history between \texttt{start-point} exclusive to \texttt{end-point} inclusive in reverse-time order (new $\rightarrow$ old). Prints the entire commit history from the first commit to the most recent commit if no \texttt{start-point, end-point} are specified.
@@ -1245,7 +1245,7 @@ This set of commands gives information of the state of the repository.
 \textbf{Options}
 \begin{itemize}[label=]
 \item \texttt{-n}: Look at the HEAD - n$^\text{th}$ commit
-\item \texttt{--decorate[$\ldots$]}: Format git log output with specified parameters \textbf{(See HW4)}
+\item \texttt{--decorate[$\ldots$]}: Format git log output with specified parameters \textbf{(see HW4)}
 \end{itemize}
 
 \textbf{Navigating \texttt{git log} in the Terminal}
@@ -1258,7 +1258,7 @@ This set of commands gives information of the state of the repository.
 
 \textbf{ASIDE: Using \texttt{git log}}
 \begin{itemize}[label=]
-\item \texttt{git log} is commonly piped into other commands such as \texttt{wc} \textbf{(See \texttt{Shell Commands})}
+\item \texttt{git log} is commonly piped into other commands such as \texttt{wc} \textbf{(see \texttt{Shell Commands})}
 \item \texttt{git log} outputs both the committer and author of a commit. While often times they are the same person, it may be that they are not. This is more apparent in big open source projects with controlled/reviewed commits. The person with repository access will be listed as the committer, while the person who wrote the code will be listed as the author.
 \end{itemize}
 
@@ -1277,7 +1277,7 @@ This set of commands relates to pushing upstream to the central repository, main
 \texttt{git add FILE}: Stages a file to commit. If the file was previously untracked, \texttt{git} will now track the file.
 
 \subsubsection*{\texttt{git rm}}
-\texttt{git rm FILE}: Removes file as well as untracks the file that was removed. This is equivalent to doing \texttt{rm FILE} \textbf{(See Shell Commands)} followed by \texttt{git add FILE}.
+\texttt{git rm FILE}: Removes file as well as untracks the file that was removed. This is equivalent to doing \texttt{rm FILE} \textbf{(see Shell Commands)} followed by \texttt{git add FILE}.
 
 \textbf{Options} 
 \begin{itemize}[label=]         
@@ -1350,7 +1350,6 @@ This set of commands relate to pulling from the upstream repository, mainly fetc
 
 
 \subsubsection{Branch Manipulation}
-\subsubsection{Overview}
 A \texttt{branch} is a lightweight \textbf{moveable} pointer\footnote{Pointer: In \texttt{git}, \texttt{HEAD} is a reference variable that points to the tip of the current working branch.} to a commit. By default, when creating a repository, there is only one branch, \texttt{main/master}. By default, when creating a new branch, \texttt{git} will branch off of the current branch. \texttt{git} is a tree structure, meaning it  must be a \texttt{DAG} in order to work.
 
 
@@ -1510,11 +1509,11 @@ Makefiles are similar to shellscripts but are more efficient: they only rebuild 
     foo: a.o b.o c.o
         gcc a.o b.o c.o -o foo
 \end{verbatim}
-\texttt{make} will determine what needs to be rebuilt by looking at file timestamps. Additionally, we can run jobs in parallel with \texttt{make -j 10}This solves (a), but this approach also creates new problems/doesn't fix old problems.
+\texttt{make} will determine what needs to be rebuilt by looking at file timestamps. Additionally, we can run jobs in parallel with \texttt{make -j 10}. This solves (a), but this approach also creates new problems/doesn't fix old problems.
 
 \begin{enumerate}[label=(\roman*)]
 \item Clock skew: Different machines might differ in their exact system time and if they’re operating on the same set of files, it's possible that one system writes a timestamp that is ahead of another system’s time or the program file generated by make is older than the edited timestamp.
-\item Missing/Extra Dependencies may cause the program to break//rebuild unnecessarily.
+\item Missing/Extra Dependencies may cause the program to break/rebuild unnecessarily.
 \end{enumerate}
 
 
@@ -1523,7 +1522,7 @@ Makefiles are similar to shellscripts but are more efficient: they only rebuild 
 
 \subsection{Syntax}
 
-\subsubsection{\texttt{\$}}
+\subsubsection*{\texttt{\$}}
 \texttt{\$}: Expands a variable
 \begin{verbatim}
     OBJ = a.o b.o c.o
@@ -1536,7 +1535,7 @@ is equivalent to
         gcc a.o b.o c.o -o foo
 \end{verbatim}
 
-\subsubsection{\texttt{\$@}}
+\subsubsection*{\texttt{\$@}}
 \texttt{\$@}: Expands to the rule name.
 \begin{verbatim}
     foo: a.o b.o c.o
@@ -1548,7 +1547,7 @@ is equivalent to
         gcc a.o b.o c.o -o foo
 \end{verbatim}
 
-\subsubsection{Rules and Recipes}
+\subsubsection*{Rules and Recipes}
 Rules have the following syntax:
 \begin{verbatim}
     TARGET: DEPENDENCIES
@@ -1809,7 +1808,7 @@ There are a couple prerequisites before using gdb:
 \end{itemize}
 
 \subsubsection{gdb with Optimization}
-When debugging it is important to remember that the executable may behave differently than what is written in the source code due to \textbf{optimization (See Optimization)}.
+When debugging it is important to remember that the executable may behave differently than what is written in the source code due to \textbf{optimization (see Optimization)}.
 
 \subsubsection*{Out-of-Order Execution}
 Consider the following source code:
@@ -1905,7 +1904,7 @@ The SHA-1 checksum is the hash function that \texttt{git} uses to create commit 
 Below are some of the subdirectories/files under \texttt{.git/} and their usage.
 \begin{itemize}[label=\texttt{.git/}]
 \item \texttt{branches/}: Legacy folder (for backwards compatability) that used to store branches
-\item \texttt{config}: \texttt{git}'s configuration file. Analogous to a barricade \textbf{(See Debugging)}
+\item \texttt{config}: \texttt{git}'s configuration file. Analogous to a barricade \textbf{(see Debugging)}
 \item \texttt{description}: Descriptor for the repository
 \item \texttt{HEAD}: The pointer\footnote{See \textit{Pointer} in \textbf{Managing the Repository: Branch Manipulation}} that points to the tip of the current working branch
 \item \texttt{hooks/}: \texttt{git}'s callbacks
@@ -2164,7 +2163,7 @@ One common coding convention is to use ASCII only to prevent any encoding errors
 
 % =============== BACKUPS ===============%
 \section{Backups}
-According to Eggert, we backed up a total of 100 ZB\footnote{1 ZB = 10$^{21}$} in the past year, roughly 90\% of which is dulicate data and roughly 50\% in the cloud. Backups very clearly dominate storage, and there is a cost for backups (global warming, apparently). Do we need all of these backups? If you look at M152A computers, you'll know that to a certain group, 93 backups (with extremely similar names) are necessary for a singular lab.
+According to Eggert, we backed up a total of 100 ZB\footnote{1 ZB = 10$^{21}$} in the past year, roughly 90\% of which is duplicate data and roughly 50\% in the cloud. Backups very clearly dominate storage, and there is a cost for backups (global warming, apparently). Do we need all of these backups? If you look at M152A computers, you'll know that to a certain group, 93 backups (with extremely similar names) are necessary for a singular lab.
 \subsection{Overview}
 Backups are a snapshot of file contents (with metadata for each file). There are two types of backups: abstract and concrete. \\ \\
 \textbf{Abstract}: Each file is a byte string (byte sequence with separate byte strings for data, metadata, etc.). This means it's dependent on OS but it isn't wasteful since you only copy over exactly what you need. \\
@@ -2190,18 +2189,18 @@ Backups used to just be an operaton staff (Ops) problem, but they couldn't handl
 \item Multiplex your backup: multiple drives backed up onto one bigger drive
 \item Incremental backups: Back up only what changes. Note that this is more fragile (but is very similar to (1))
 \item Selective backups: Determine what is worth backing up.
-\item Snapshots: \textbf{See Snapshots)}
+\item Snapshots: \textbf{(see Snapshots)}
 \item Backup to cheapder devices. e.g.
 \begin{verbatim}
     Flash => Disk => Optical
     Main    Backup  Secondary
                      Backup
 \end{verbatim}
-\item Redundancy in devices: \textbf{(See RAID (Redundant Array of Inexpensive Disks))}
+\item Redundancy in devices: Spread data across all drives and include a parity drive in case of hardware failure
 \end{enumerate}
 
 \subsubsection{Incremental Backups}
-At the file level, each backup has a timestamp, so take a similar approach to \texttt{make} \textbf{(See \texttt{make})} and only backup files with t' $>$ t. Consequently, we run into the same problems as \texttt{make} like clock-skew. So, in yet another layer of abstraction, we rely on the clocks being monotonically nondecreasing. One other problem with this is that deleted files are not addressed in this schema. \\ \\
+At the file level, each backup has a timestamp, so take a similar approach to \texttt{make} \textbf{(see \texttt{make})} and only backup files with t' $>$ t. Consequently, we run into the same problems as \texttt{make} like clock-skew. So, in yet another layer of abstraction, we rely on the clocks being monotonically nondecreasing. One other problem with this is that deleted files are not addressed in this schema. \\ \\
 Within a given file F, consider $\Delta$F. You can do \texttt{diff -u F $\Delta$F > t}. You now have an "edit script" that will patch a file F to $\Delta$F by running \texttt{patch <t F}. This is good for text files.
 
 \subsubsection{Automated Data Grooming}
@@ -2212,7 +2211,7 @@ find all file where g == f
         rm g
         ln f g (there is a race condition BUT ln -f f g is atomic)
 \end{verbatim}
-This assumes the files are read-only, since if you now change \texttt{g}, \texttt{f} is also changed \textbf{(See Hard Links)}. To remedy this problem, we have Copy-on-Write (CoW), which will make a copy of a file if it's link count $>$ 1, writing to the copy. The idea is to share read-only files, and make a copy for writes. \\ \\
+This assumes the files are read-only, since if you now change \texttt{g}, \texttt{f} is also changed \textbf{(see Hard Links)}. To remedy this problem, we have Copy-on-Write (CoW), which will make a copy of a file if it's link count $>$ 1, writing to the copy. The idea is to share read-only files, and make a copy for writes. \\ \\
 This leads to another issue: If metadata(f) $\neq$ metadata(g), g will lose metadata. To solve this issue, we change the definition of equality. Finally, there's the issue of not having enough storage to copy on write.
 
 \subsubsection*{Block-level Deduplication}
@@ -2275,7 +2274,7 @@ Reverse time order (e.g. 12 => 11)
 \end{verbatim}
 One major issue with RCS was that it was a per-file VCS. The creator of RCS wasn't as smart as Linus Torvalds. \\ \\
 CVS (not the pharmacy) introduced commits that can address multiple files, and had a client-server model for repositories. A descendent of CVS was SVN, which was CVS on steroids. \\ \\
-The Linux kernal initially used: CVS $\rightarrow$ SVN $\rightarrow$ BitKeeper (proprietary software). Linus Torvalds said "fuck that I want free" so naturally, he built \texttt{git}, which hilariously ran BitKeeper out of business (they open sourced in 2016 but hardly anyone uses BitKeeper anymore).
+The Linux kernal initially used: CVS $\rightarrow$ SVN $\rightarrow$ BitKeeper (proprietary software). Linus Torvalds said "me personally, I would not use a proprietary software", so naturally, he built \texttt{git}, which hilariously ran BitKeeper out of business (they open sourced in 2016 but hardly anyone uses BitKeeper anymore).
 
 
 
@@ -2283,7 +2282,7 @@ The Linux kernal initially used: CVS $\rightarrow$ SVN $\rightarrow$ BitKeeper (
 
 % =============== SOFTWARE AND LAW ===============%
 \section{A 10 min Overview of Compiler Internals}
-Compiled languages (like C/++) compile in multiple stages \textbf{(See C)}. The hardest part however is converting into general ASM. Compilers answer the question of "How do I turn \\ \texttt{a += *b[5]} into \\ \texttt{movq b, \%rbx \\movl 0 XX}" \\ \\
+Compiled languages (like C/++) compile in multiple stages \textbf{(see C)}. The hardest part however is converting into general ASM. Compilers answer the question of "How do I turn \\ \texttt{a += *b[5]} into \\ \texttt{movq b, \%rbx \\movl 0 XX}" \\ \\
 Let $L$ denote the many source languages (C/++, Python, etc.) and $M$ denote the many architectures (x86-64, ARM, RISC-V, etc.). Do we have to write $L \cdot M$ compilers? No! Instead, we have a set of common compiler internals that take in a language $l \in L$ and translate it to a specific architecture $m \in M$, which then converts into general ASM. This way, we only need to do $c + L + M$ work, where $c$ is a constant.
 
 
