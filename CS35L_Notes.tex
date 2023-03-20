@@ -1,6 +1,7 @@
 \documentclass[13pt]{article}
 \usepackage{amsmath, amsthm, amssymb, graphicx, enumitem, esvect}
 \usepackage{inconsolata}
+\usepackage{titlesec}
 
 \usepackage[english]{babel}
 
@@ -9,7 +10,9 @@
 \begin{document}
 \tableofcontents
 \newpage
-% =================================== FILE SYSTEMS =================================== %
+\addcontentsline{toc}{section}{The First Half}
+\section*{The First Half}
+% =================================== FILE SYSTEMS ===============  ==================== %
 \section{File Systems}
 Most often thought of as a tree structure \\
 Can be a DAG structure (With hard/symbolic links) \\
@@ -351,16 +354,34 @@ I/O Redirections redirect standard input, standard output, and standard error.
 \section{Basic \texttt{grep} (Global Regular Expression Print)}
 \subsection{Overview}
 Grep is used to search for regular expressions. You can use \texttt{gp (global print)} to print all lines in a file, or \texttt{g/your-regex-expression/p} to search for a specific expression.
-\subsection{Basics}
+\subsection{Syntax}
 \subsubsection{Basic Syntax}
-\begin{itemize}[leftmargin = 0pt]
-\item [] \texttt{\^} Only special if you specify the start of the line unless it is inside brackets (see \textbf{Bracket Syntax})
-\item [] \texttt{\$} Only special if you specify the end of the line
-\item [] \texttt{[ ]} Match any occurrence of a single character that is between the brackets
-\item [] \texttt{\textbackslash ( \textbackslash )} Treats anything contained in the parentheses as one pattern (most often used with \texttt{*})
-\item [] \texttt{*} Match one or more occurrence to the character immediate left of \texttt{*} or the contents inside of \texttt{\textbackslash ( \textbackslash )}. Note: \texttt{*} is \textbf{not} special in brackets.
-\item[] \texttt{.} Matches all characters \textbf{except} newline
-\item [] \texttt{\textbackslash} Escape the special characters in this list
+\begin{itemize}[label=]
+\item [\texttt{[...]}] Custom character class
+\item [\texttt{[\^}\texttt{...]}] Negated custom character class
+\item [\texttt{[a-z]}] Range operator, not escaped unless it's the first or last (e.g. \texttt{[-a-z]} or \texttt{[a-z-]})
+\item [\texttt{\textbackslash |}] Or operator
+\item [\texttt{.}] Any character excluding newline
+\item [\texttt{\textbackslash}] Escape character (excluding when inside a character class)
+\end{itemize}
+
+\subsubsection{Boundaries and Groups}
+\begin{itemize}[label=]
+\item [\texttt{\^}] Only special at the start of a line
+\item [\texttt{\$}] Only special at the end of a line
+\item [\texttt{\textbackslash(...\textbackslash)}] Capture a group (string) of characters
+\item [\texttt{\textbackslash\#}] Backreference group \#
+\end{itemize}
+
+\subsubsection{Multiplicity}
+\begin{itemize}[label=]
+\item [\texttt{\textbackslash?}] 0 or 1 occurrences
+\item [\texttt{*}] 0 or more occurrences
+\item [\texttt{\textbackslash+}] 1 or more occurrences
+\item [\texttt{\textbackslash\{n\textbackslash\}}] Specific number of occurrences
+\item [\texttt{\textbackslash\{n, m\textbackslash\}}] Between \texttt{n} and \texttt{m} occurrences inclusive
+\item [\texttt{\textbackslash\{n, \textbackslash\}}] \texttt{n} or more occurrences
+\item [\texttt{\textbackslash\{, m\textbackslash\}}] Up to\texttt{m} occurrences
 \end{itemize}
 
 \subsubsection*{Examples}
@@ -388,14 +409,12 @@ Brackets are used to match any occurrence of a single character that is between 
 \textbf{Note:} Grep reads left to right and searches greedily.
 \subsubsection{Bracket Syntax}
 \begin{itemize}[leftmargin = 0pt]
+\item [] \texttt{*} is \textbf{not} special in brackets.
 \item [] \texttt{\^} Must be at the front. Finds occurrences that do \textbf{not} match what follows
 \item [] \texttt{-} Range operator. When put at the end, \texttt{grep} searches for \texttt{-} itself
 \item [] \texttt{\textbackslash [} and \texttt{\textbackslash ]} Escapes the brackets, so it searches for the brackets themselves
 \end{itemize}
 \subsubsection*{Examples}
-\begin{verbatim}
-  grep [aeiou] \end{verbatim}
-searches for any occurrences of \texttt{a}, \texttt{e}, \texttt{i} \texttt{o}, or \texttt{u}
 \begin{verbatim}
   grep [aeiou]" \end{verbatim}
 searches for any occurrences of \texttt{a"}, \texttt{e"}, \texttt{i"} \texttt{o"}, or \texttt{u"}
@@ -414,8 +433,8 @@ searches for any occurrences of any lowercase letter or number between 0 and 9 i
 searches for any occurrences of \texttt{]} or any lowercase letter \\ \\
 \textbf{Note:} To find \texttt{[} inside brackets, put it at the very front
 \begin{verbatim}
-  grep []a-z] \end{verbatim}
-searches for any occurrences of \texttt{]} or any lowercase letter
+  grep [[a-z] \end{verbatim}
+searches for any occurrences of \texttt{[} or any lowercase letter
 \begin{verbatim}
   grep [] \end{verbatim}
 is invalid
@@ -434,7 +453,10 @@ searches for any occurrences of \texttt{a} or \texttt{\^} \\ \\
 searches for anything that is \textbf{not} \texttt{\textbackslash n} (newline)
 \begin{verbatim}
   grep "['\"\\]": \end{verbatim}
-searches for \texttt{' "} or \texttt{\textbackslash}    
+searches for \texttt{' "} or \texttt{\textbackslash}
+\begin{verbatim}
+  grep "['\"\\*]": \end{verbatim}
+searches for \texttt{' "} or \texttt{\textbackslash} or \texttt{*}
 
 
 % =================================== EXTENDED GREP =================================== %
@@ -443,28 +465,35 @@ searches for \texttt{' "} or \texttt{\textbackslash}
 In extended grep, parentheses \texttt{()}, the or operator \texttt{|}, and question mark \texttt{?} are special characters
 
 \subsection{Extended Grep Syntax}
-\begin{itemize}[leftmargin = 0pt]
-\item [] \texttt{\^} Only special if you specify the start of the line unless it is inside brackets (see \textbf{Bracket Syntax})
-\item [] \texttt{\$} Only special if you specify the end of the line
-\item [] \texttt{[ ]} Match any occurrence of a single character that is between the brackets
-\item [] \texttt{*} Match one or more occurrence to the character immediate left of \texttt{*}
-\item [] \texttt{( )} Treats anything contained in the parentheses as one pattern (most often used with \texttt{*})
-  \begin{itemize}[leftmargin = 0pt]
-  \item [] \textbf{Note:} \texttt{)} is only special when paired with an opening \texttt{(}
-  \end{itemize}
-\item [] \texttt{|} Logical \textbf{or}: Let \texttt{p} and \texttt{q} be two expressions. Then, \texttt{p | q} will match either \texttt{p} or \texttt{q}
-\item [] \texttt{?} Equivalent to saying \texttt{p|''}, where \texttt{p} is an expression and \texttt{''} is a newline character
-\item[] \texttt{.} Matches all characters \textbf{except} newline
-\item [] \texttt{\{i, j\}} Matches the expression anywhere from \texttt{i} to \texttt{j} times (inclusive). 
-  \begin{itemize}[leftmargin = 0pt]
-  \item [] \textbf{Example:} \texttt{P\{3, 5\}} is equivalent to \texttt{PPP(PP?)?} where \texttt{P} is a regular expression pattern. 
-  \item [] If \texttt{i} is unspecified, the expression will evaluate to \texttt{P\{, 5\}} and will match up to 5 instances. 
-  \item [] If \texttt{j} is unspecified, the expression will evalutate to \texttt{P\{3, \}} and will match 3 or more instances
-  \end{itemize}
-\item [] \texttt{\textbackslash} Escape the special characters in this list
-\item [] \texttt{\textbackslash \#} At the very end of expressions, this matches exactly what's inside the parentheses (\# goes up to 9)
-\item [] \texttt{+} One or more occurrences
+\subsubsection{Basic Syntax}
+\begin{itemize}[label=]
+\item [\texttt{[...]}] Custom character class
+\item [\texttt{[\^}\texttt{...]}] Negated custom character class
+\item [\texttt{[a-z]}] Range operator, not escaped unless it's the first or last (e.g. \texttt{[-a-z]} or \texttt{[a-z-]})
+\item [\texttt{|}] Or operator
+\item [\texttt{.}] Any character excluding newline
+\item [\texttt{\textbackslash}] Escape character (excluding when inside a character class)
 \end{itemize}
+
+\subsubsection{Boundaries and Groups}
+\begin{itemize}[label=]
+\item [\texttt{\^}] Only special at the start of a line
+\item [\texttt{\$}] Only special at the end of a line
+\item [\texttt{(...)}] Capture a group (string) of characters
+\item [\texttt{\textbackslash\#}] Backreference group \#
+\end{itemize}
+
+\subsubsection{Multiplicity}
+\begin{itemize}[label=]
+\item [\texttt{?}] 0 or 1 occurrences
+\item [\texttt{*}] 0 or more occurrences
+\item [\texttt{+}] 1 or more occurrences
+\item [\texttt{\{n\}}] Specific number of occurrences
+\item [\texttt{\{n, m\}}] Between \texttt{n} and \texttt{m} occurrences inclusive
+\item [\texttt{\{n, \}}] \texttt{n} or more occurrences
+\item [\texttt{\{, m\}}] Up to\texttt{m} occurrences
+\end{itemize}
+\textbf{Note:} \texttt{)} is only special when paired with an opening \texttt{(}
 
 \subsubsection{Predefined Character Sets}
 \texttt{[:ascii:], [:alpha:], [:digit:], [:alnum:]} are predefined character sets that can be used with grep to match any character in that set. \\ \\
@@ -1109,6 +1138,28 @@ Emacs commands are structured like a tree. For example, \texttt{C-} is the entry
 \item [] \texttt{-z, --null-data}: Separate lines by \texttt{NUL} characters
 \end{itemize}
 
+\subsection{Translate (\texttt{tr})}
+\texttt{tr [OPTION] SET1 [SET2]}: Translate/squeeze/delete characters from stdin, writing to stdout
+\begin{itemize}[leftmargin = 0pt]
+\item [] \texttt{-c, -C, --complement}: Use the complement of \texttt{SET1}
+\item [] \texttt{-d, --delete}: Delete characters in \texttt{SET1} (do not translate)
+\item [] \texttt{-s, --squeeze-repeats}: Replace each repeated character in the last specified \texttt{SET} with a single occurrence of the character
+\item [] \texttt{-t, --truncate-set1}: First truncate \texttt{SET1} to the length of \texttt{SET2}
+\end{itemize}
+\textbf{Sets} are specified as character strings
+\begin{itemize}[leftmargin = 0pt]
+\item [] \texttt{\textbackslash NNN}: Character with octal value \texttt{NNN}
+\item [] \texttt{\textbackslash\textbackslash}: Backslash
+\item [] \texttt{\textbackslash n}: Newline
+\item [] \texttt{CHAR1-CHAR2}: All characters from \texttt{CHAR1} to \texttt{CHAR2} in ascending order
+\item [] \texttt{[CHAR*]}: In \texttt{SET2}, copies of \texttt{CHAR} until length of \texttt{SET1}
+\item [] \texttt{[:...:]}: Character class (see \textbf{Predefined Character Sets})
+\end{itemize}
+
+\section*{End of First Half}
+\newpage
+\addcontentsline{toc}{section}{The Second Half}
+\section*{The Second Half}
 
 % =============== VERSION CONTROL ===============%
 \section{Version Control (\texttt{git})}
